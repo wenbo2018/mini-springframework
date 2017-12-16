@@ -1,12 +1,20 @@
 package com.github.wenbo2018.minispringframework.context;
 
+import com.github.wenbo2018.minispringframework.beans.factory.ConfigurableListableBeanFactory;
 import com.github.wenbo2018.minispringframework.except.BeansException;
 import com.github.wenbo2018.minispringframework.util.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
 
 /**
  * Created by wenbo.shen on 2017/12/16.
  */
 public abstract class AbstractApplicationContext implements ApplicationContext {
+
+
+    private static final Logger logger = LoggerFactory.getLogger(AbstractApplicationContext.class);
 
 
     private ApplicationContext parent;
@@ -28,10 +36,24 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
         return null;
     }
 
-    protected void refresh() throws BeansException {
-
+    protected void refresh() throws BeansException, IOException {
+        ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
+        loadBeanDefinitions(beanFactory);
     }
 
+
+    protected ConfigurableListableBeanFactory obtainFreshBeanFactory() {
+        ConfigurableListableBeanFactory beanFactory = getBeanFactory();
+        if (logger.isDebugEnabled()) {
+            logger.debug("Bean factory for is{}", beanFactory);
+        }
+        return beanFactory;
+    }
+
+    /***
+     * 设置Spring配置文件路径
+     * @param locations
+     */
     public void setConfigLocations(String... locations) {
         if (locations != null) {
             Assert.noNullElements(locations, "Config locations must not be null");
@@ -43,5 +65,11 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
             this.configLocations = null;
         }
     }
+
+
+    public abstract ConfigurableListableBeanFactory getBeanFactory() throws IllegalStateException;
+
+    protected abstract void loadBeanDefinitions(ConfigurableListableBeanFactory beanFactory)
+            throws BeansException, IOException;
 
 }

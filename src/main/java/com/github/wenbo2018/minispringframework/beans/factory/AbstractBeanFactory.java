@@ -13,9 +13,9 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public abstract class AbstractBeanFactory implements BeanFactory {
 
-    private Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<String, BeanDefinition>();
+    protected final Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<String, BeanDefinition>(256);
 
-    private final List<String> beanDefinitionNames = new ArrayList<String>();
+    protected final List<String> beanDefinitionNames = new ArrayList<String>();
 
     private List<BeanPostProcessor> beanPostProcessors = new ArrayList<BeanPostProcessor>();
 
@@ -29,8 +29,5 @@ public abstract class AbstractBeanFactory implements BeanFactory {
         return null;
     }
 
-    protected abstract Object initializeBean(Object bean, String name);
-
-    protected abstract Object doCreateBean(BeanDefinition beanDefinition);
 
 }
