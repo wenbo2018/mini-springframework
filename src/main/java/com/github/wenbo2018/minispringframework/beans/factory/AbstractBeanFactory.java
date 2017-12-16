@@ -22,25 +22,15 @@ public abstract class AbstractBeanFactory implements BeanFactory {
 
     @Override
     public Object getBean(String name) throws Exception {
-        BeanDefinition beanDefinition = beanDefinitionMap.get(name);
-        if (beanDefinition == null) {
-            throw new IllegalArgumentException("No bean named " + name + " is defined");
-        }
-        Object bean = beanDefinition.getBean();
-        if (bean == null) {
-            bean = doCreateBean(beanDefinition);
-            bean = initializeBean(bean, name);
-            beanDefinition.setBean(bean);
-        }
-        return bean;
+        return doGetBean(name);
+    }
+
+    public Object doGetBean(String name) {
+        return null;
     }
 
     protected abstract Object initializeBean(Object bean, String name);
 
     protected abstract Object doCreateBean(BeanDefinition beanDefinition);
 
-    @Override
-    public Object getBean(Class classz) {
-        return null;
-    }
 }
