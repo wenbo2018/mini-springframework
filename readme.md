@@ -1,1 +1,4 @@
 # mini-springframework
+
+mini-springframework是对Spring的简化实现，Spring代码过于繁杂如果想全面阅读比较困难，mini-springframework简化了Spring实现
+同时保持了Spring启动过程中的重要环节，有利于加深的Spring架构设计理解。
