@@ -3,6 +3,7 @@ package com.github.wenbo2018.minispringframework.support;
 import com.github.wenbo2018.minispringframework.beans.Io.DefaultResourceLoader;
 import com.github.wenbo2018.minispringframework.beans.Io.Resource;
 import com.github.wenbo2018.minispringframework.beans.Io.ResourceLoader;
+import com.github.wenbo2018.minispringframework.except.BeanDefinitionStoreException;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -32,12 +33,14 @@ public abstract class AbstractBeanDefinitionReader implements BeanDefinitionRead
         return this.resourceLoader;
     }
 
-    protected void loadBeanDefinition(String... locations) throws ParserConfigurationException, SAXException, IOException {
+    @Override
+    public void loadBeanDefinitions(String... locations) throws BeanDefinitionStoreException, ParserConfigurationException, SAXException, IOException {
         for (String location : locations) {
             ResourceLoader resourceLoader = getResourceLoader();
             Resource resource = resourceLoader.getResource(location);
             loadBeanDefinitions(resource);
         }
     }
+
 
 }

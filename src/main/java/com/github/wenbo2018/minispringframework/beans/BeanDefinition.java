@@ -9,7 +9,7 @@ public class BeanDefinition {
 
     private String className;
 
-    private volatile Object beanClass;
+    private volatile Class beanClass;
 
     public String getName() {
         return name;
@@ -19,16 +19,16 @@ public class BeanDefinition {
         this.name = name;
     }
 
-    public Object getBeanClass() {
+    public Class getBeanClass() {
         return beanClass;
-    }
-
-    public void setBeanClass(Object beanClass) {
-        this.beanClass = beanClass;
     }
 
     public String getClassName() {
         return className;
+    }
+
+    public void setBeanClass(Class beanClass) {
+        this.beanClass = beanClass;
     }
 
     public void setClassName(String className) {

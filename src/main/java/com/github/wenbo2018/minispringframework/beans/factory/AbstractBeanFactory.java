@@ -1,7 +1,7 @@
 package com.github.wenbo2018.minispringframework.beans.factory;
 
 import com.github.wenbo2018.minispringframework.beans.BeanDefinition;
-import com.github.wenbo2018.minispringframework.beans.BeanPostProcessor;
+import com.github.wenbo2018.minispringframework.beans.factory.config.BeanPostProcessor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,9 +41,18 @@ public abstract class AbstractBeanFactory implements BeanFactory {
         return bean;
     }
 
+    public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) throws Exception {
+        this.beanPostProcessors.add(beanPostProcessor);
+    }
+
+
     private Object getObjectForBeanInstance() {
         return null;
     }
 
-    protected abstract Object createBean(String beanName, BeanDefinition beanDefinition);
+    protected abstract Object createBean(String beanName, BeanDefinition beanDefinition) throws IllegalAccessException, InstantiationException;
+
+    public List<BeanPostProcessor> getBeanPostProcessors() {
+        return beanPostProcessors;
+    }
 }

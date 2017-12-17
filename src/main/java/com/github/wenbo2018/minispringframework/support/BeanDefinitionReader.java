@@ -15,7 +15,7 @@ public interface BeanDefinitionReader {
 
     void loadBeanDefinitions(Resource resource) throws IOException, ParserConfigurationException, SAXException;
 
-    int loadBeanDefinitions(String... locations) throws BeanDefinitionStoreException;
+    void loadBeanDefinitions(String... locations) throws BeanDefinitionStoreException, ParserConfigurationException, SAXException, IOException;
 
     ResourceLoader getResourceLoader();
 

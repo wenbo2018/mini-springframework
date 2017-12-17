@@ -1,6 +1,8 @@
 package com.github.wenbo2018.minispringframework.context;
 
 import com.github.wenbo2018.minispringframework.beans.factory.DefaultListableBeanFactory;
+import com.github.wenbo2018.minispringframework.beans.factory.ListableBeanFactory;
+import com.github.wenbo2018.minispringframework.beans.factory.config.BeanPostProcessor;
 import com.github.wenbo2018.minispringframework.except.BeansException;
 import com.github.wenbo2018.minispringframework.util.Assert;
 import org.slf4j.Logger;
@@ -9,11 +11,12 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by wenbo.shen on 2017/12/16.
  */
-public abstract class AbstractApplicationContext implements ApplicationContext {
+public abstract class AbstractApplicationContext implements ApplicationContext, ListableBeanFactory {
 
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractApplicationContext.class);
@@ -38,9 +41,10 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
         return null;
     }
 
-    protected void refresh() throws BeansException, IOException, ParserConfigurationException, SAXException {
+    protected void refresh() throws Exception {
         DefaultListableBeanFactory beanFactory = obtainFreshBeanFactory();
         loadBeanDefinitions(beanFactory);
+        registerBeanPostProcessors(beanFactory);
     }
 
 
@@ -68,6 +72,18 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
         }
     }
 
+    protected void registerBeanPostProcessors(DefaultListableBeanFactory beanFactory) throws Exception {
+
+        List beanPostProcessors = this.getBeansForType(BeanPostProcessor.class);
+        for (Object beanPostProcessor : beanPostProcessors) {
+            beanFactory.addBeanPostProcessor((com.github.wenbo2018.minispringframework.beans.BeanPostProcessor) beanPostProcessor);
+        }
+    }
+
+    @Override
+    public List<Object> getBeansForType(Class<?> type) throws Exception {
+        return this.getBeanFactory().getBeansForType(type);
+    }
 
     public DefaultListableBeanFactory getBeanFactory() throws IllegalStateException {
         return new DefaultListableBeanFactory();

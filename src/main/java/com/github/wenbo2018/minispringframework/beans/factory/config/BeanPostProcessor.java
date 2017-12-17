@@ -1,4 +1,4 @@
-package com.github.wenbo2018.minispringframework.beans.factory.cconfig;
+package com.github.wenbo2018.minispringframework.beans.factory.config;
 
 /**
  * Created by wenbo.shen on 2017/12/16.
