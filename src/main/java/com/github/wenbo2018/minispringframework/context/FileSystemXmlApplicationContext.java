@@ -1,8 +1,10 @@
 package com.github.wenbo2018.minispringframework.context;
 
-import com.github.wenbo2018.minispringframework.beans.factory.ConfigurableListableBeanFactory;
+import com.github.wenbo2018.minispringframework.beans.factory.DefaultListableBeanFactory;
 import com.github.wenbo2018.minispringframework.except.BeansException;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 
 /**
@@ -20,16 +22,16 @@ public class FileSystemXmlApplicationContext extends AbstractXmlApplicationConte
     }
 
 
-    public FileSystemXmlApplicationContext(String configLocation) throws BeansException, IOException {
+    public FileSystemXmlApplicationContext(String configLocation) throws BeansException, IOException, ParserConfigurationException, SAXException {
         this(new String[]{configLocation}, true, null);
     }
 
-    public FileSystemXmlApplicationContext(String... configLocations) throws BeansException, IOException {
+    public FileSystemXmlApplicationContext(String... configLocations) throws BeansException, IOException, ParserConfigurationException, SAXException {
         this(configLocations, true, null);
     }
 
     public FileSystemXmlApplicationContext(String[] configLocations, boolean refresh, ApplicationContext parent)
-            throws BeansException, IOException {
+            throws BeansException, IOException, ParserConfigurationException, SAXException {
         super(parent);
         setConfigLocations(configLocations);
         if (refresh) {
@@ -38,7 +40,7 @@ public class FileSystemXmlApplicationContext extends AbstractXmlApplicationConte
     }
 
     @Override
-    public ConfigurableListableBeanFactory getBeanFactory() throws IllegalStateException {
+    public DefaultListableBeanFactory getBeanFactory() throws IllegalStateException {
         return null;
     }
 

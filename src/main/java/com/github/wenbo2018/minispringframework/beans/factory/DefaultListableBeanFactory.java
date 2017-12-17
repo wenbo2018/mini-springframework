@@ -7,7 +7,7 @@ import com.github.wenbo2018.minispringframework.support.BeanDefinitionRegistry;
 /**
  * Created by wenbo.shen on 2017/12/16.
  */
-public class ConfigurableListableBeanFactory extends AbstractBeanFactory implements BeanDefinitionRegistry {
+public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFactory implements BeanDefinitionRegistry {
 
     @Override
     public void registerBeanDefinition(String beanName, BeanDefinition beanDefinition) {

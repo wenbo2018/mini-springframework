@@ -37,7 +37,6 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
                 inputStream.close();
             }
         }
-
     }
 
     public void registerBeanDefinitions(Document doc, Resource resource) {

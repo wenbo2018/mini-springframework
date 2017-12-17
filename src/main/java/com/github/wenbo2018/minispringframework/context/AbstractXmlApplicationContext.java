@@ -1,9 +1,11 @@
 package com.github.wenbo2018.minispringframework.context;
 
-import com.github.wenbo2018.minispringframework.beans.factory.ConfigurableListableBeanFactory;
+import com.github.wenbo2018.minispringframework.beans.factory.DefaultListableBeanFactory;
 import com.github.wenbo2018.minispringframework.except.BeansException;
 import com.github.wenbo2018.minispringframework.support.XmlBeanDefinitionReader;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 
 /**
@@ -11,7 +13,9 @@ import java.io.IOException;
  */
 public abstract class AbstractXmlApplicationContext extends AbstractApplicationContext {
 
+
     public AbstractXmlApplicationContext() {
+
     }
 
     public AbstractXmlApplicationContext(ApplicationContext parent) {
@@ -19,7 +23,10 @@ public abstract class AbstractXmlApplicationContext extends AbstractApplicationC
     }
 
     @Override
-    protected void loadBeanDefinitions(ConfigurableListableBeanFactory beanFactory) throws BeansException, IOException {
+    protected void loadBeanDefinitions(DefaultListableBeanFactory beanFactory) throws BeansException, IOException, ParserConfigurationException, SAXException {
         XmlBeanDefinitionReader beanDefinitionReader = new XmlBeanDefinitionReader(beanFactory);
+        beanDefinitionReader.loadBeanDefinitions(getConfigLocations());
     }
 }
+
+

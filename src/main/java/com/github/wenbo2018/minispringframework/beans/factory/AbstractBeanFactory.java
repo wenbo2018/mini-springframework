@@ -15,9 +15,9 @@ public abstract class AbstractBeanFactory implements BeanFactory {
 
     protected final Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<String, BeanDefinition>(256);
 
-    protected final List<String> beanDefinitionNames = new ArrayList<String>();
+    private final Map<String, Object> singletonObjects = new ConcurrentHashMap<String, Object>(256);
 
-    private List<BeanPostProcessor> beanPostProcessors = new ArrayList<BeanPostProcessor>();
+    private final List<BeanPostProcessor> beanPostProcessors = new ArrayList<BeanPostProcessor>();
 
 
     @Override
@@ -25,9 +25,25 @@ public abstract class AbstractBeanFactory implements BeanFactory {
         return doGetBean(name);
     }
 
-    public Object doGetBean(String name) {
+    public Object doGetBean(String beanName) {
+        Object bean;
+        BeanDefinition beanDefinition = beanDefinitionMap.get(beanName);
+        if (beanDefinition == null) {
+            throw new IllegalArgumentException("Bean named " + beanName + " is not defined");
+        }
+        Object sharedInstance = singletonObjects.get(beanName);
+        if (sharedInstance != null) {
+            bean = getObjectForBeanInstance();
+            return bean;
+        }
+        sharedInstance = createBean(beanName, beanDefinition);
+        bean = getObjectForBeanInstance();
+        return bean;
+    }
+
+    private Object getObjectForBeanInstance() {
         return null;
     }
 
-
+    protected abstract Object createBean(String beanName, BeanDefinition beanDefinition);
 }

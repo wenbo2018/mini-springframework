@@ -1,11 +1,13 @@
 package com.github.wenbo2018.minispringframework.context;
 
-import com.github.wenbo2018.minispringframework.beans.factory.ConfigurableListableBeanFactory;
+import com.github.wenbo2018.minispringframework.beans.factory.DefaultListableBeanFactory;
 import com.github.wenbo2018.minispringframework.except.BeansException;
 import com.github.wenbo2018.minispringframework.util.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 
 /**
@@ -19,7 +21,7 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
 
     private ApplicationContext parent;
 
-    private String[] configLocations;
+    protected String[] configLocations;
 
 
     public AbstractApplicationContext() {
@@ -36,14 +38,14 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
         return null;
     }
 
-    protected void refresh() throws BeansException, IOException {
-        ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
+    protected void refresh() throws BeansException, IOException, ParserConfigurationException, SAXException {
+        DefaultListableBeanFactory beanFactory = obtainFreshBeanFactory();
         loadBeanDefinitions(beanFactory);
     }
 
 
-    protected ConfigurableListableBeanFactory obtainFreshBeanFactory() {
-        ConfigurableListableBeanFactory beanFactory = getBeanFactory();
+    protected DefaultListableBeanFactory obtainFreshBeanFactory() {
+        DefaultListableBeanFactory beanFactory = getBeanFactory();
         if (logger.isDebugEnabled()) {
             logger.debug("Bean factory for is{}", beanFactory);
         }
@@ -67,9 +69,15 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
     }
 
 
-    public abstract ConfigurableListableBeanFactory getBeanFactory() throws IllegalStateException;
+    public DefaultListableBeanFactory getBeanFactory() throws IllegalStateException {
+        return new DefaultListableBeanFactory();
+    }
 
-    protected abstract void loadBeanDefinitions(ConfigurableListableBeanFactory beanFactory)
-            throws BeansException, IOException;
+    protected abstract void loadBeanDefinitions(DefaultListableBeanFactory beanFactory)
+            throws BeansException, IOException, ParserConfigurationException, SAXException;
 
+
+    public String[] getConfigLocations() {
+        return configLocations;
+    }
 }
