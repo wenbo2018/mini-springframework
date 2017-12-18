@@ -50,7 +50,7 @@ public abstract class AbstractBeanFactory implements BeanFactory {
         return null;
     }
 
-    protected abstract Object createBean(String beanName, BeanDefinition beanDefinition) throws IllegalAccessException, InstantiationException;
+    protected abstract Object createBean(String beanName, BeanDefinition beanDefinition) throws Exception;
 
     public List<BeanPostProcessor> getBeanPostProcessors() {
         return beanPostProcessors;
