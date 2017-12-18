@@ -3,6 +3,7 @@ package com.github.wenbo2018.minispringframework.beans.factory;
 import com.github.wenbo2018.minispringframework.beans.BeanDefinition;
 import com.github.wenbo2018.minispringframework.beans.factory.config.BeanPostProcessor;
 
+import java.lang.reflect.Method;
 import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
@@ -36,21 +37,31 @@ public class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory {
         //调用BeanPostProcessor的初始化前方法
         exposedObject = applyBeanPostProcessorsBeforeInitialization(beanName, exposedObject);
         //调用afterPropertiesSet方法
-        invokeAfterPropertiesSetMethod(beanName, exposedObject, beanDefinition);
+        invokeInitMethods(beanName, exposedObject, beanDefinition);
         //调用自定义init方法
-        //invokeInitMethods(beanName, wrappedBean, mbd);
         //调用BeanPostProcessor的初始化后方法
         exposedObject = applyBeanPostProcessorsAfterInitialization(beanName, exposedObject);
         return exposedObject;
     }
 
-    private void invokeAfterPropertiesSetMethod(String beanName, Object bean, BeanDefinition beanDefinition) throws Exception {
+    private void invokeInitMethods(String beanName, Object bean, BeanDefinition beanDefinition) throws Exception {
 
         boolean isInitializingBean = (bean instanceof InitializingBean);
 
         if (isInitializingBean) {
             ((InitializingBean) bean).afterPropertiesSet();
         }
+        if (beanDefinition.getInitMethodName() != null) {
+            invokeCustomInitMethod(beanName, bean, beanDefinition);
+        }
+    }
+
+
+    private void invokeCustomInitMethod(String beanName, Object bean, BeanDefinition beanDefinition) throws Exception {
+        String initMethodName = beanDefinition.getInitMethodName();
+        Class clazz = bean.getClass();
+        Method initMethod = clazz.getDeclaredMethod(initMethodName);
+        initMethod.invoke(bean);
     }
 
     /****

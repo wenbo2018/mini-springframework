@@ -11,6 +11,8 @@ public class BeanDefinition {
 
     private volatile Class beanClass;
 
+    private String initMethodName;
+
     public String getName() {
         return name;
     }
@@ -33,5 +35,13 @@ public class BeanDefinition {
 
     public void setClassName(String className) {
         this.className = className;
+    }
+
+    public String getInitMethodName() {
+        return initMethodName;
+    }
+
+    public void setInitMethodName(String initMethodName) {
+        this.initMethodName = initMethodName;
     }
 }
