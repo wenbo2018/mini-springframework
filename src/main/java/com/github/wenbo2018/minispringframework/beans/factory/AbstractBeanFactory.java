@@ -25,7 +25,7 @@ public abstract class AbstractBeanFactory implements BeanFactory {
         return doGetBean(name);
     }
 
-    public Object doGetBean(String beanName) {
+    public Object doGetBean(String beanName) throws InstantiationException, IllegalAccessException {
         Object bean;
         BeanDefinition beanDefinition = beanDefinitionMap.get(beanName);
         if (beanDefinition == null) {
