@@ -34,7 +34,7 @@ public abstract class AbstractBeanDefinitionReader implements BeanDefinitionRead
     }
 
     @Override
-    public void loadBeanDefinitions(String... locations) throws BeanDefinitionStoreException, ParserConfigurationException, SAXException, IOException {
+    public void loadBeanDefinitions(String... locations) throws BeanDefinitionStoreException, ParserConfigurationException, SAXException, IOException, ClassNotFoundException {
         for (String location : locations) {
             ResourceLoader resourceLoader = getResourceLoader();
             Resource resource = resourceLoader.getResource(location);

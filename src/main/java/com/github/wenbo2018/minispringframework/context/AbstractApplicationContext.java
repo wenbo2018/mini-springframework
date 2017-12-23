@@ -26,6 +26,8 @@ public abstract class AbstractApplicationContext implements ApplicationContext, 
 
     protected String[] configLocations;
 
+    protected DefaultListableBeanFactory beanFactory;
+
 
     public AbstractApplicationContext() {
 
@@ -37,8 +39,7 @@ public abstract class AbstractApplicationContext implements ApplicationContext, 
 
     @Override
     public Object getBean(String name) throws Exception {
-
-        return null;
+        return this.beanFactory.getBean(name);
     }
 
     protected void refresh() throws Exception {
@@ -49,11 +50,12 @@ public abstract class AbstractApplicationContext implements ApplicationContext, 
 
 
     protected DefaultListableBeanFactory obtainFreshBeanFactory() {
-        DefaultListableBeanFactory beanFactory = getBeanFactory();
+        DefaultListableBeanFactory beanFactory = createBeanFactory();
         if (logger.isDebugEnabled()) {
             logger.debug("Bean factory for is{}", beanFactory);
         }
-        return beanFactory;
+        this.beanFactory = beanFactory;
+        return this.beanFactory;
     }
 
     /***
@@ -76,7 +78,7 @@ public abstract class AbstractApplicationContext implements ApplicationContext, 
 
         List beanPostProcessors = this.getBeansForType(BeanPostProcessor.class);
         for (Object beanPostProcessor : beanPostProcessors) {
-            beanFactory.addBeanPostProcessor((com.github.wenbo2018.minispringframework.beans.BeanPostProcessor) beanPostProcessor);
+            beanFactory.addBeanPostProcessor((BeanPostProcessor) beanPostProcessor);
         }
     }
 
@@ -85,15 +87,23 @@ public abstract class AbstractApplicationContext implements ApplicationContext, 
         return this.getBeanFactory().getBeansForType(type);
     }
 
-    public DefaultListableBeanFactory getBeanFactory() throws IllegalStateException {
+    public DefaultListableBeanFactory createBeanFactory() throws IllegalStateException {
         return new DefaultListableBeanFactory();
     }
 
     protected abstract void loadBeanDefinitions(DefaultListableBeanFactory beanFactory)
-            throws BeansException, IOException, ParserConfigurationException, SAXException;
+            throws BeansException, IOException, ParserConfigurationException, SAXException, ClassNotFoundException;
 
 
     public String[] getConfigLocations() {
         return configLocations;
+    }
+
+    public DefaultListableBeanFactory getBeanFactory() {
+        return beanFactory;
+    }
+
+    public void setBeanFactory(DefaultListableBeanFactory beanFactory) {
+        this.beanFactory = beanFactory;
     }
 }

@@ -25,7 +25,7 @@ public abstract class AbstractBeanFactory implements BeanFactory {
         return doGetBean(name);
     }
 
-    public Object doGetBean(String beanName) throws InstantiationException, IllegalAccessException {
+    public Object doGetBean(String beanName) throws Exception {
         Object bean;
         BeanDefinition beanDefinition = beanDefinitionMap.get(beanName);
         if (beanDefinition == null) {
@@ -37,8 +37,7 @@ public abstract class AbstractBeanFactory implements BeanFactory {
             return bean;
         }
         sharedInstance = createBean(beanName, beanDefinition);
-        bean = getObjectForBeanInstance();
-        return bean;
+        return sharedInstance;
     }
 
     public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) throws Exception {

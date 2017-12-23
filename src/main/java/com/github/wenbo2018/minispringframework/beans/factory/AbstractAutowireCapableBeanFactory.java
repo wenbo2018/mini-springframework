@@ -26,8 +26,8 @@ public class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory {
 
     private Object doCreateBean(String beanName, BeanDefinition beanDefinition) throws Exception {
         Object beanInstance = createBeanInstance(beanName, beanDefinition);
-        initializeBean(beanName, beanInstance, beanDefinition);
-        return null;
+        beanInstance = initializeBean(beanName, beanInstance, beanDefinition);
+        return beanInstance;
     }
 
 
