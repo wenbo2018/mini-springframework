@@ -9,7 +9,7 @@ import java.net.URL;
 public class DefaultResourceLoader implements ResourceLoader {
     @Override
     public Resource getResource(String location) throws MalformedURLException {
-        URL url = new URL(location);
+        URL url = this.getClass().getClassLoader().getResource(location);
         return new UrlResource(url);
     }
 }

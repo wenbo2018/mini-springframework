@@ -23,7 +23,7 @@ public abstract class AbstractXmlApplicationContext extends AbstractApplicationC
     }
 
     @Override
-    protected void loadBeanDefinitions(DefaultListableBeanFactory beanFactory) throws BeansException, IOException, ParserConfigurationException, SAXException {
+    protected void loadBeanDefinitions(DefaultListableBeanFactory beanFactory) throws BeansException, IOException, ParserConfigurationException, SAXException, ClassNotFoundException {
         XmlBeanDefinitionReader beanDefinitionReader = new XmlBeanDefinitionReader(beanFactory);
         beanDefinitionReader.loadBeanDefinitions(getConfigLocations());
     }

@@ -22,27 +22,20 @@ public class FileSystemXmlApplicationContext extends AbstractXmlApplicationConte
     }
 
 
-    public FileSystemXmlApplicationContext(String configLocation) throws BeansException, IOException, ParserConfigurationException, SAXException {
+    public FileSystemXmlApplicationContext(String configLocation) throws Exception {
         this(new String[]{configLocation}, true, null);
     }
 
-    public FileSystemXmlApplicationContext(String... configLocations) throws BeansException, IOException, ParserConfigurationException, SAXException {
+    public FileSystemXmlApplicationContext(String... configLocations) throws Exception {
         this(configLocations, true, null);
     }
 
     public FileSystemXmlApplicationContext(String[] configLocations, boolean refresh, ApplicationContext parent)
-            throws BeansException, IOException, ParserConfigurationException, SAXException {
+            throws Exception {
         super(parent);
         setConfigLocations(configLocations);
         if (refresh) {
             refresh();
         }
     }
-
-    @Override
-    public DefaultListableBeanFactory getBeanFactory() throws IllegalStateException {
-        return null;
-    }
-
-
 }

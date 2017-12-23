@@ -2,6 +2,7 @@ package com.github.wenbo2018.minispringframework.support;
 
 import com.github.wenbo2018.minispringframework.beans.BeanDefinition;
 import com.github.wenbo2018.minispringframework.beans.Io.Resource;
+import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -24,7 +25,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
     }
 
     @Override
-    public void loadBeanDefinitions(Resource resource) throws IOException, ParserConfigurationException, SAXException {
+    public void loadBeanDefinitions(Resource resource) throws IOException, ParserConfigurationException, SAXException, ClassNotFoundException {
         InputStream inputStream = null;
         try {
             inputStream = resource.getInputStream();
@@ -39,12 +40,12 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
         }
     }
 
-    public void registerBeanDefinitions(Document doc, Resource resource) {
+    public void registerBeanDefinitions(Document doc, Resource resource) throws ClassNotFoundException {
         Element root = doc.getDocumentElement();
         doRegisterBeanDefinitions(root);
     }
 
-    protected void doRegisterBeanDefinitions(Element root) {
+    protected void doRegisterBeanDefinitions(Element root) throws ClassNotFoundException {
         NodeList nl = root.getChildNodes();
         for (int i = 0; i < nl.getLength(); i++) {
             Node node = nl.item(i);
@@ -55,18 +56,21 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
         }
     }
 
-    protected void parseDefaultElement(Element ele) {
+    protected void parseDefaultElement(Element ele) throws ClassNotFoundException {
         processBeanDefinition(ele);
     }
 
-    protected void processBeanDefinition(Element ele) {
+    protected void processBeanDefinition(Element ele) throws ClassNotFoundException {
         String name = ele.getAttribute("id");
         String className = ele.getAttribute("class");
         String initMethodName = ele.getAttribute("init-method");
         BeanDefinition beanDefinition = new BeanDefinition();
         beanDefinition.setClassName(className);
         beanDefinition.setName(name);
-        beanDefinition.setInitMethodName(initMethodName);
+        beanDefinition.setBeanClass(Class.forName(className));
+        if (StringUtils.isNotEmpty(initMethodName)) {
+            beanDefinition.setInitMethodName(initMethodName);
+        }
         getRegistry().registerBeanDefinition(name, beanDefinition);
     }
 
