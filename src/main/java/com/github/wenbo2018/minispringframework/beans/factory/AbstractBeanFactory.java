@@ -37,8 +37,7 @@ public abstract class AbstractBeanFactory implements BeanFactory {
             return bean;
         }
         sharedInstance = createBean(beanName, beanDefinition);
-        bean = getObjectForBeanInstance();
-        return bean;
+        return sharedInstance;
     }
 
     public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) throws Exception {
