@@ -1,4 +1,4 @@
-package com.github.wenbo2018.minispringframework.except;
+package com.github.wenbo2018.minispringframework.exception;
 
 /**
  * Created by wenbo.shen on 2017/12/16.

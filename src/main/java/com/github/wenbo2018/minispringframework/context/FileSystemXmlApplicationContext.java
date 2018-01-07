@@ -1,12 +1,5 @@
 package com.github.wenbo2018.minispringframework.context;
 
-import com.github.wenbo2018.minispringframework.beans.factory.DefaultListableBeanFactory;
-import com.github.wenbo2018.minispringframework.except.BeansException;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
-
 /**
  * Created by wenbo.shen on 2017/12/16.
  */
