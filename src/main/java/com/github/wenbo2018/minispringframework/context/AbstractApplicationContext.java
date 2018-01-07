@@ -3,7 +3,7 @@ package com.github.wenbo2018.minispringframework.context;
 import com.github.wenbo2018.minispringframework.beans.factory.DefaultListableBeanFactory;
 import com.github.wenbo2018.minispringframework.beans.factory.ListableBeanFactory;
 import com.github.wenbo2018.minispringframework.beans.factory.config.BeanPostProcessor;
-import com.github.wenbo2018.minispringframework.except.BeansException;
+import com.github.wenbo2018.minispringframework.exception.BeansException;
 import com.github.wenbo2018.minispringframework.util.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

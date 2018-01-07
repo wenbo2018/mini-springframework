@@ -1,7 +1,7 @@
 package com.github.wenbo2018.minispringframework.context;
 
 import com.github.wenbo2018.minispringframework.beans.factory.DefaultListableBeanFactory;
-import com.github.wenbo2018.minispringframework.except.BeansException;
+import com.github.wenbo2018.minispringframework.exception.BeansException;
 import com.github.wenbo2018.minispringframework.support.XmlBeanDefinitionReader;
 import org.xml.sax.SAXException;
 

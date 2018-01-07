@@ -1,7 +1,7 @@
 package com.github.wenbo2018.minispringframework.beans.factory;
 
 import com.github.wenbo2018.minispringframework.beans.BeanDefinition;
-import com.github.wenbo2018.minispringframework.except.BeanDefinitionStoreException;
+import com.github.wenbo2018.minispringframework.exception.BeanDefinitionStoreException;
 import com.github.wenbo2018.minispringframework.support.BeanDefinitionRegistry;
 
 import java.util.ArrayList;

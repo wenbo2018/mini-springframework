@@ -3,7 +3,7 @@ package com.github.wenbo2018.minispringframework.support;
 import com.github.wenbo2018.minispringframework.beans.Io.DefaultResourceLoader;
 import com.github.wenbo2018.minispringframework.beans.Io.Resource;
 import com.github.wenbo2018.minispringframework.beans.Io.ResourceLoader;
-import com.github.wenbo2018.minispringframework.except.BeanDefinitionStoreException;
+import com.github.wenbo2018.minispringframework.exception.BeanDefinitionStoreException;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
